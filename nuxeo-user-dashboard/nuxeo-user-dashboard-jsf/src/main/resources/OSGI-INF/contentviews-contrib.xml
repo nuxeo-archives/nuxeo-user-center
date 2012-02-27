@@ -80,9 +80,6 @@
       <pageProvider name="domain_documents">
         <property name="coreSession">#{documentManager}</property>
         <parameter>#{jsfDashboardActions.selectedDomainPath}</parameter>
-        <parameter>
-          #{jsfDashboardActions.selectedDomainTemplatesPath}
-        </parameter>
       </pageProvider>
       <showPageSizeSelector>false</showPageSizeSelector>
       <showRefreshCommand>true</showRefreshCommand>
@@ -172,9 +169,6 @@
       <pageProvider name="user_sites">
         <property name="coreSession">#{documentManager}</property>
         <parameter>#{jsfDashboardActions.selectedDomainPath}</parameter>
-        <parameter>
-          #{jsfDashboardActions.selectedDomainTemplatesPath}
-        </parameter>
       </pageProvider>
       <showPageSizeSelector>false</showPageSizeSelector>
       <showRefreshCommand>true</showRefreshCommand>
@@ -197,9 +191,6 @@
       <pageProvider name="user_workspaces">
         <property name="coreSession">#{documentManager}</property>
         <parameter>#{jsfDashboardActions.selectedDomainPath}</parameter>
-        <parameter>
-          #{jsfDashboardActions.selectedDomainTemplatesPath}
-        </parameter>
       </pageProvider>
       <showPageSizeSelector>false</showPageSizeSelector>
       <showRefreshCommand>true</showRefreshCommand>
