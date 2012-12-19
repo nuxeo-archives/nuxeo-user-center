@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-features-parent</artifactId>
-    <version>5.4.2.1-SNAPSHOT</version>
+    <version>5.4.2-HF31</version>
   </parent>
 
   <artifactId>nuxeo-user-center-parent</artifactId>
@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <nuxeo.user.center.version>5.4.2.1-SNAPSHOT</nuxeo.user.center.version>
+    <nuxeo.user.center.version>5.4.2-HF31</nuxeo.user.center.version>
   </properties>
 
   <modules>
