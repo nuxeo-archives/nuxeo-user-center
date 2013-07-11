@@ -20,13 +20,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.SystemPrincipal;
 import org.nuxeo.ecm.core.event.Event;
 import org.nuxeo.ecm.core.event.EventListener;
 import org.nuxeo.ecm.core.event.impl.DocumentEventContext;
 import org.nuxeo.ecm.user.center.profile.UserProfileService;
 import org.nuxeo.ecm.webapp.locale.LocaleStartup;
 import org.nuxeo.runtime.api.Framework;
-import org.nuxeo.runtime.api.login.LoginComponent;
 
 /**
  * Refresh Faces locale and timezone when the userProfileDocument is updated
@@ -43,14 +43,13 @@ public class UserLocaleSelectorListener implements EventListener {
         DocumentEventContext ctx = (DocumentEventContext) event.getContext();
         DocumentModel userProfileDocument = ctx.getSourceDocument();
 
-
         // The document should be the current user profile doc
         if (!userProfileDocument.hasFacet("UserProfile")) {
             return;
         }
 
-        // system user, should not lazy create user workspace (NXP-11950)
-        if (LoginComponent.isSystemLogin(ctx.getPrincipal())) {
+        // do not update locale settings for system users (NXP-11950)
+        if (SystemPrincipal.class.isAssignableFrom(ctx.getPrincipal().getClass())) {
             return;
         }
 
