@@ -27,6 +27,7 @@ import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.DocumentRef;
+import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.UnrestrictedSessionRunner;
 import org.nuxeo.ecm.core.api.security.ACE;
 import org.nuxeo.ecm.core.api.security.ACL;
@@ -47,12 +48,24 @@ public class UserProfileServiceImpl extends DefaultComponent implements
 
     private UserWorkspaceService userWorkspaceService;
 
+    protected final SimpleCache<String> profileUidCache = new SimpleCache<String>(
+            1000);
+
     @Override
     public DocumentModel getUserProfileDocument(CoreSession session)
             throws ClientException {
         DocumentModel userWorkspace = getUserWorkspaceService().getCurrentUserPersonalWorkspace(
                 session, null);
-        return new UserProfileDocumentGetter(session, userWorkspace).getOrCreate();
+        String uid = profileUidCache.getIfPresent(session.getPrincipal().getName());
+        if (uid != null) {
+            return session.getDocument(new IdRef(uid));
+        } else {
+            DocumentModel profile = new UserProfileDocumentGetter(session,
+                    userWorkspace).getOrCreate();
+            profileUidCache.put(session.getPrincipal().getName(),
+                    profile.getId());
+            return profile;
+        }
     }
 
     @Override
@@ -60,7 +73,15 @@ public class UserProfileServiceImpl extends DefaultComponent implements
             CoreSession session) throws ClientException {
         DocumentModel userWorkspace = getUserWorkspaceService().getUserPersonalWorkspace(
                 userName, session.getRootDocument());
-        return new UserProfileDocumentGetter(session, userWorkspace).getOrCreate();
+        String uid = profileUidCache.getIfPresent(userName);
+        if (uid != null) {
+            return session.getDocument(new IdRef(uid));
+        } else {
+            DocumentModel profile = new UserProfileDocumentGetter(session,
+                    userWorkspace).getOrCreate();
+            profileUidCache.put(userName, profile.getId());
+            return profile;
+        }
     }
 
     @Override
@@ -94,8 +115,15 @@ public class UserProfileServiceImpl extends DefaultComponent implements
 
         @Override
         public void run() throws ClientException {
-            DocumentModelList children = session.getChildren(
-                    userWorkspace.getRef(), USER_PROFILE_DOCTYPE);
+            String query = "select * from "
+                    + USER_PROFILE_DOCTYPE
+                    + " where "
+                    + "ecm:parentId='"
+                    + userWorkspace.getId()
+                    + "' "
+                    + " AND ecm:isProxy = 0 "
+                    + " AND ecm:isCheckedInVersion = 0 AND ecm:currentLifeCycleState != 'deleted'";
+            DocumentModelList children = session.query(query);
             if (!children.isEmpty()) {
                 userProfileDocRef = children.get(0).getRef();
             } else {
@@ -122,7 +150,5 @@ public class UserProfileServiceImpl extends DefaultComponent implements
             }
             return session.getDocument(userProfileDocRef);
         }
-
     }
-
 }
