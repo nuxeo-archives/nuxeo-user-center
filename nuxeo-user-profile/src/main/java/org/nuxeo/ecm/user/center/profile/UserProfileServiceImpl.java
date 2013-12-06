@@ -151,4 +151,10 @@ public class UserProfileServiceImpl extends DefaultComponent implements
             return session.getDocument(userProfileDocRef);
         }
     }
+
+    @Override
+    public void clearCache() {
+        profileUidCache.clear();
+    }
+
 }
