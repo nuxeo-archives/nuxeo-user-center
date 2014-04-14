@@ -22,13 +22,10 @@ import static org.nuxeo.ecm.core.api.security.SecurityConstants.EVERYONE;
 import static org.nuxeo.ecm.core.api.security.SecurityConstants.READ;
 import static org.nuxeo.ecm.user.center.profile.UserProfileConstants.USER_PROFILE_DOCTYPE;
 
-<<<<<<< HEAD
 import java.util.concurrent.TimeUnit;
 
-=======
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
->>>>>>> f7fa761... NXP-12200 Implement UserProfileService CSV data file importer
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
