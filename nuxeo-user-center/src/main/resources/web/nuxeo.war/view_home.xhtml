@@ -16,7 +16,9 @@
 
   <ui:define name="body">
 
-    <nxl:widget name="homeTabs" mode="view" value="#{currentDocument}" />
+    <nxu:set var="mainTabId" value="home">
+      <nxl:widget name="homeTabs" mode="view" value="#{currentDocument}" />
+    </nxu:set>
 
   </ui:define>
 
