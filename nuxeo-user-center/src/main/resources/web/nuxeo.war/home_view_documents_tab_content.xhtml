@@ -1,5 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml"
   xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:nxw="http://nuxeo.org/nxforms/runtime/widget"
   xmlns:nxl="http://nuxeo.org/nxforms/layout">
 
   <h:form id="document_header_layout_form" class="titleBlock">
@@ -8,6 +9,6 @@
       includeAnyMode="false" />
   </h:form>
 
-  <nxl:widget name="documentTabs" mode="view" value="#{currentDocument}" />
+  <nxw:documentTabs mode="view" value="#{currentDocument}" />
 
 </div>
