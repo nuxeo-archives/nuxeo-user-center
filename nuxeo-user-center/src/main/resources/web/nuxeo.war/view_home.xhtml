@@ -5,17 +5,17 @@
   xmlns:f="http://java.sun.com/jsf/core"
   xmlns:c="http://java.sun.com/jstl/core"
   xmlns:nxu="http://nuxeo.org/nxweb/util"
-  xmlns:nxl="http://nuxeo.org/nxforms/layout"
+  xmlns:nxw="http://nuxeo.org/nxforms/runtime/widget"
   xmlns:a4j="http://richfaces.org/a4j">
   <ui:param name="pageName" value="userCenter/default" />
 
   <ui:define name="page title">
-      <h:outputText value="#{nuxeoApplicationName} - #{messages['label.main.tab.home']}"/>
+    <h:outputText value="#{nuxeoApplicationName} - #{messages['label.main.tab.home']}"/>
   </ui:define>
 
   <ui:define name="body">
 
-    <nxl:widget name="homeTabs" mode="view" value="#{currentDocument}" />
+    <nxw:homeTabs mode="view" value="#{currentDocument}" />
 
   </ui:define>
 
